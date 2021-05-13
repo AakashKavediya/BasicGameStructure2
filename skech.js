@@ -1,4 +1,4 @@
-var player, target, obs1, obs2,obs3,obs4,obs5,obs6,obs7,obs8, edge;
+var player, target, obs1, obs2,obs3,obs4,obs5,obs6,obs7,obs8, edge,worm,score,wormgroup;
 function setup() {
   createCanvas(1250, 600);
   edge = createEdgeSprites();
@@ -22,6 +22,10 @@ function setup() {
   obs7.shapeColor = "red";
   obs8 = createSprite(950, 400, 100, 30);
   obs8.shapeColor = "red";
+
+
+  
+    wormGroup= new Group();
   
   obs1.velocityX = -20;
   obs2.velocityX = -20;
@@ -71,32 +75,51 @@ function draw() {
   obs8.bounceOff(edge[1]);
 
   if(player.isTouching(obs1)) {
-    obs1.velocityX = 0;}
+    obs1.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);}
     // text("You loose", 200, 300);
     
   if(player.isTouching(obs1)) {
-    obs1.velocityX = 0;}
+    obs1.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);}
 
   if(player.isTouching(obs2)) {
-    obs2.velocityX = 0;}
+    obs2.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);}
 
   if(player.isTouching(obs3)) {
-    obs3.velocityX = 0;}
+    obs3.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);}
 
   if(player.isTouching(obs4)) {
-    obs4.velocityX = 0;}
+    obs4.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);}
 
   if(player.isTouching(obs5)) {
-    obs5.velocityX = 0;}
+    obs5.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);}
 
   if(player.isTouching(obs6)) {
-    obs6.velocityX = 0;}
+    obs6.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);}
 
   if(player.isTouching(obs7)) {
-    obs7.velocityX = 0;}
+    obs7.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);}
 
   if(player.isTouching(obs8)) {
-    obs8.velocityX = 0;}
+    obs8.velocityX = 0;
+    textSize(30);
+    text("You Loss",580,260);
+    }
     
   if(player.isTouching(target)){
     obs1.velocityX = 0;
@@ -107,5 +130,47 @@ function draw() {
     obs6.velocityX = 0;
     obs7.velocityX = 0;
     obs8.velocityX = 0;
+    textSize(40)
+    text("You Win",580,260)
+    stroke("transparent")
+  }
+
+
+    stroke("black")
+    noFill();
+    ellipse(600,280,40,30);
+    player.x= mouseX;
+    player.y= mouseY;
+
+if(player.x<640 && player.x>570 && player.y<300 && player.y>250 ){
+  text("NO CHEATING!!",600,150);
+  player.x=50;
+  player.y=550;
+}
+
+generateWorms();
+
+for(var i = 0 ; i< (wormGroup).length ;i++){
+  var temp = (wormGroup).get(i) ;
+  if (player.isTouching(temp)) {
+    score++;
+    temp.destroy();
+    temp=null;
+    }   
+  }
+
+  drawSprites();
+  textSize(30);
+  text("Worms destroyed:"+score,350,50);
+}
+
+function generateWorms(){
+if(frameCount % 30===0){
+  console.log(frameCount);
+  var worm = createSprite(600,280,60,8);
+  worm.shapeColor="skyblue"
+  worm.velocityX=random(-15,15);
+  worm.velocityY=random(-15,15);
+  wormGroup.add(worm);
   }
 }
